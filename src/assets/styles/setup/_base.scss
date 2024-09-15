@@ -55,3 +55,14 @@ input {
     font-family: circular;
 }
 
+main {
+    background-color: $clr01;
+}
+
+aside {
+    background-image: url('/src/assets/images/bg-main-desktop.png');
+    background-size: cover;    
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
