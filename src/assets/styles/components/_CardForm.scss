@@ -62,21 +62,6 @@
     
   }
 
-  button {
-    margin-block: 30px 0px;
-    font-size: 20px;
-    background-color: $clr04;
-    color: $clr02;
-    padding: 16px;
-    border-radius: 10px;
-    cursor: pointer;
-
-    &:disabled {
-      background-color: grey;
-      cursor: not-allowed;
-    }
-  }
-
   .errorMsg{
     display: flex;
     align-items: center;
