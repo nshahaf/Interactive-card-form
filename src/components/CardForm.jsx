@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function CardForm({ setForm }) {
+export default function CardForm({ setForm, submitForm }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [month, setMonth] = useState("");
@@ -35,22 +35,26 @@ export default function CardForm({ setForm }) {
 
   // Validate the card number
   const validateNumber = (number) => {
-    const formattedNumber = number.replace(/\s+/g, '')
-    const numberRegex = /^[0-9]{16}$/;
+    const formattedNumber = number.replace(/\s+/g, ""); // Remove all spaces
+    const numberRegex = /^[0-9]{16}$/; // Regex to check for exactly 16 digits
+    const digitOnlyPattern = /^\d+$/; // Regex to check for digits only
+
     if (!formattedNumber) {
       setNumberError("Card number is required");
       return false;
+    } else if (!digitOnlyPattern.test(formattedNumber)) {
+      setNumberError("Card number must be digits only");
+      return false;
     } else if (!numberRegex.test(formattedNumber)) {
-      setNumberError("Card number must be 16 digits");
+      setNumberError("Card number must be exactly 16 digits");
       return false;
     } else {
-      setNumberError("");
+      setNumberError(""); // Clear any previous errors
       return true;
     }
-    
   };
 
-   // Validate the expiration month
+  // Validate the expiration month
   const validateMonth = (month) => {
     if (!month || month < 1 || month > 12 || month.length !== 2) {
       setMonthError("Valid month is required");
@@ -87,9 +91,6 @@ export default function CardForm({ setForm }) {
       return true;
     }
   };
-
- 
- 
 
   // Validate the entire form whenever any input changes
   useEffect(() => {
@@ -132,6 +133,13 @@ export default function CardForm({ setForm }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setName("");
+    setNumber("");
+    setMonth("");
+    setYear("");
+    setDigits("");
+
+    submitForm();
   };
 
   return (
@@ -148,7 +156,11 @@ export default function CardForm({ setForm }) {
         value={name}
         onChange={handleChange}
       />
-      {nameError? <p className="errorMsg">{nameError}</p> : <p className="errorMsg"></p>}
+      {nameError ? (
+        <p className="errorMsg">{nameError}</p>
+      ) : (
+        <p className="errorMsg"></p>
+      )}
 
       <label htmlFor="card-number">Card number</label>
       <input
@@ -160,7 +172,11 @@ export default function CardForm({ setForm }) {
         value={number}
         onChange={handleChange}
       />
-      {numberError?  <p className="errorMsg">{numberError}</p> : <p className="errorMsg"></p>}
+      {numberError ? (
+        <p className="errorMsg">{numberError}</p>
+      ) : (
+        <p className="errorMsg"></p>
+      )}
 
       <div className="date-cvc-labels">
         <label htmlFor="month">EXP. DATE (MM/YY)</label>
@@ -198,7 +214,11 @@ export default function CardForm({ setForm }) {
         />
       </div>
       <div className="date-cvc-errors">
-        {(monthError || yearError || digitsError) ? <p className="errorMsg">{monthError || yearError || digitsError}</p> : <p className="errorMsg"></p>}
+        {monthError || yearError || digitsError ? (
+          <p className="errorMsg">{monthError || yearError || digitsError}</p>
+        ) : (
+          <p className="errorMsg"></p>
+        )}
       </div>
 
       <button type="submit" disabled={!isFormValid}>
