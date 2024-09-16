@@ -1,11 +1,107 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function CardForm() {
+export default function CardForm({ setForm }) {
   const [name, setName] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
+  const [number, setNumber] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
-  const [cvc, setCvc] = useState("");
+  const [digits, setDigits] = useState("");
+
+  const [nameError, setNameError] = useState("");
+  const [numberError, setNumberError] = useState("");
+  const [monthError, setMonthError] = useState("");
+  const [yearError, setYearError] = useState("");
+  const [digitsError, setDigitsError] = useState("");
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  // Validate the cardholder's name
+  const validateName = (name) => {
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!name) {
+      setNameError("Name is required");
+      return false;
+    } else if (!nameRegex.test(name)) {
+      setNameError("Name can only contain letters and spaces");
+      return false;
+    } else if (name.length < 3) {
+      setNameError("Name must be longer than 3 characters");
+      return false;
+    } else {
+      setNameError("");
+      return true;
+    }
+  };
+
+  // Validate the card number
+  const validateNumber = (number) => {
+    const formattedNumber = number.replace(/\s+/g, '')
+    const numberRegex = /^[0-9]{16}$/;
+    if (!formattedNumber) {
+      setNumberError("Card number is required");
+      return false;
+    } else if (!numberRegex.test(formattedNumber)) {
+      setNumberError("Card number must be 16 digits");
+      return false;
+    } else {
+      setNumberError("");
+      return true;
+    }
+    
+  };
+
+   // Validate the expiration month
+  const validateMonth = (month) => {
+    if (!month || month < 1 || month > 12 || month.length !== 2) {
+      setMonthError("Valid month is required");
+      return false;
+    } else {
+      setMonthError("");
+      return true;
+    }
+  };
+
+  // Validate the expiration year
+  const validateYear = (year) => {
+    const currentYear = new Date().getFullYear().toString().slice(2, 4);
+    if (!year || year.length !== 2 || year < currentYear) {
+      setYearError("Valid year is required");
+      return false;
+    } else {
+      setYearError("");
+      return true;
+    }
+  };
+
+  // Validate the CVC digits
+  const validateDigits = (digits) => {
+    const digitsRegex = /^[0-9]{3}$/;
+    if (!digits) {
+      setDigitsError("CVV is required");
+      return false;
+    } else if (!digitsRegex.test(digits)) {
+      setDigitsError("CVV must be 3 digits");
+      return false;
+    } else {
+      setDigitsError("");
+      return true;
+    }
+  };
+
+ 
+ 
+
+  // Validate the entire form whenever any input changes
+  useEffect(() => {
+    const isValid =
+      validateName(name) &&
+      validateNumber(number) &&
+      validateMonth(month) &&
+      validateYear(year) &&
+      validateDigits(digits);
+
+    setIsFormValid(isValid);
+  }, [name, number, month, year, digits]);
 
   const handleChange = (e) => {
     const field = e.target.name;
@@ -15,8 +111,8 @@ export default function CardForm() {
       case "name":
         setName(value);
         break;
-      case "card-number":
-        setCardNumber(value);
+      case "number":
+        setNumber(value);
         break;
       case "month":
         setMonth(value);
@@ -24,21 +120,14 @@ export default function CardForm() {
       case "year":
         setYear(value);
         break;
-      case "cvc":
-        setCvc(value);
+      case "digits":
+        setDigits(value);
         break;
       default:
         break;
     }
 
-    const form = {
-      name,
-      cardNumber,
-      month,
-      year,
-      cvc,
-    };
-    console.log(form);
+    setForm((prevForm) => ({ ...prevForm, [field]: value }));
   };
 
   const handleSubmit = (e) => {
@@ -54,23 +143,28 @@ export default function CardForm() {
         type="text"
         name="name"
         id="name"
+        className={nameError ? "invalid" : ""}
         placeholder="e.g. Jane Appleseed"
         value={name}
         onChange={handleChange}
       />
+      {nameError? <p className="errorMsg">{nameError}</p> : <p className="errorMsg"></p>}
 
       <label htmlFor="card-number">Card number</label>
       <input
         type="text"
-        name="card-number"
-        id="card-number"
+        name="number"
+        id="number"
         placeholder="e.g. 1234 5678 9123 0000"
-        value={cardNumber}
+        className={numberError ? "invalid" : ""}
+        value={number}
         onChange={handleChange}
       />
+      {numberError?  <p className="errorMsg">{numberError}</p> : <p className="errorMsg"></p>}
+
       <div className="date-cvc-labels">
         <label htmlFor="month">EXP. DATE (MM/YY)</label>
-        <label htmlFor="cvc">CVC</label>
+        <label htmlFor="digits">CVC</label>
       </div>
 
       <div className="date-cvc-inputs">
@@ -78,6 +172,7 @@ export default function CardForm() {
           type="number"
           id="month"
           name="month"
+          className={monthError ? "invalid" : ""}
           placeholder="MM"
           value={month}
           onChange={handleChange}
@@ -86,6 +181,7 @@ export default function CardForm() {
           type="number"
           id="year"
           name="year"
+          className={yearError ? "invalid" : ""}
           placeholder="YY"
           value={year}
           onChange={handleChange}
@@ -93,15 +189,21 @@ export default function CardForm() {
 
         <input
           type="number"
-          name="cvc"
-          id="cvc"
+          name="digits"
+          id="digits"
+          className={digitsError ? "invalid" : ""}
           placeholder="e.g 123"
-          value={cvc}
+          value={digits}
           onChange={handleChange}
         />
       </div>
+      <div className="date-cvc-errors">
+        {(monthError || yearError || digitsError) ? <p className="errorMsg">{monthError || yearError || digitsError}</p> : <p className="errorMsg"></p>}
+      </div>
 
-      <button type="submit">Confirm</button>
+      <button type="submit" disabled={!isFormValid}>
+        Confirm
+      </button>
     </form>
   );
 }
