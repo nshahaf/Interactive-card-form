@@ -1,16 +1,19 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-
 html {
-    font-family: circular;
+  font-family: circular;
 }
 
 body {
+  font-size: 14px;
+
+  @include for-narrow-layout {
     font-size: 18px;
+  }
 }
 
 h1,
@@ -19,50 +22,71 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0 0 0.6em;
-    line-height: 1;
+  margin: 0 0 0.6em;
+  line-height: 1;
 }
-
 
 li {
-    line-height: 0;
+  line-height: 0;
 }
 
-
 img {
-    width: 100%;
+  width: 100%;
 }
 
 p {
-    margin: 0 0 1em;
-    max-width: 40ch;
+  margin: 0 0 1em;
+  max-width: 40ch;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 a:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 button {
-    font-family: circular;
+  font-family: circular;
 }
 
 input {
-    font-family: circular;
+  font-family: circular;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 main {
-    background-color: $clr01;
+  position: relative;
+  background-color: $clr01;
 }
 
 aside {
-    background-image: url('/src/assets/images/bg-main-desktop.png');
-    background-size: cover;    
-    background-position: center; 
-    background-repeat: no-repeat; 
+  background-image: url("/src/assets/images/bg-main-desktop.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
+.card {
+  width: 300px;
+  height: 150px;
+
+  border-radius: 5px;
+
+  @include for-narrow-layout {
+    width: 400px;
+    height: 200px;
+  }
+}
