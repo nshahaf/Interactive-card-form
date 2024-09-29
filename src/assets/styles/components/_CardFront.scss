@@ -26,39 +26,49 @@ $ball-size-large: 30px;
     padding: 20px 0 0 20px;
 
     .circle {
-      width: $ball-size-small;
-      height: $ball-size-small;
+      width: 10px;
+      height: 10px;
       aspect-ratio: 1;
       border-radius: 50%;
       border: 1px solid white;
+      
+      @include for-narrow-layout{
+        width: $ball-size-small;
+        height: $ball-size-small;
+      }
     }
 
     .white {
       background-color: white;
-      width: $ball-size-large;
-      height: $ball-size-large;
+      width: 20px;
+      height: 20px;
+
+      @include for-narrow-layout{
+        width: $ball-size-large;
+        height: $ball-size-large;
+      }
     }
   }
 
   .card-number {
     width: 100%;
     letter-spacing: 2px;
-    font-size: 1.4rem;
-    margin-top: 30px;
-    padding-inline: 5px;
+    font-size: 1.2rem;
+    margin-top: 35px;
+    padding-inline: 20px;
     color: $clr02;
 
     @include for-narrow-layout {
       padding-inline: 20px;
       margin-top: 60px;
+      font-size: 1.4rem;
     }
   }
   .card-footer {
-    margin-top: 20px;
+    margin-top: 15px;
     padding-inline: 20px;
-    .name {
-    }
-    .valid-date {
+    @include for-narrow-layout {
+      margin-top: 20px;
     }
   }
 }
