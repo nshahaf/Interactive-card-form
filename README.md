@@ -10,7 +10,7 @@ A modern interactive form built with React, Vite, and SCSS. This project feature
 
 ### Project Page
 
-You can view the project live at: [Project Page](https://github.io/username/repository-name)
+You can view the project live at: [Project Page](https://nshahaf.github.io/Interactive-card-form/)
 
 ## Getting Started Locally
 
@@ -28,13 +28,13 @@ Make sure you have the following installed:
 1. **Clone the repository:**
 
 ```bash
-   git clone https://github.com/username/repository-name.git
+   git clone https://github.com/nshahaf/Interactive-card-form.git
 ```
 
 2. **Navigate to the project directory:**
 
 ```bash
-   cd repository-name
+   cd Interactive-card-form
 ```
 
 3. **Install dependencies:**
