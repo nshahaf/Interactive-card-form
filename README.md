@@ -1,6 +1,8 @@
 # Interactive Form
 
-A modern interactive form built with React, Vite, and SCSS. This project features real-time validation and a sleek design, showcasing various form handling techniques.
+solution to the [intercative form challenge on Frontend Mentor]([https://www.frontendmentor.io/challenges/space-tourism-multipage-website-gRWj1URZ3](https://www.frontendmentor.io/challenges/interactive-card-details-form-XpS8cKZDWw)).
+
+A modern interactive form built with React, Vite, and SCSS. This project features real-time validation and a sleek design, showcasing various form handlling techniques.
 
 ### Technologies Used
 
