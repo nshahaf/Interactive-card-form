@@ -14,6 +14,10 @@ A modern interactive form built with React, Vite, and SCSS. This project feature
 
 You can view the project live at: [Project Page](https://nshahaf.github.io/Interactive-card-form/)
 
+### Screenshot:
+![image](https://github.com/user-attachments/assets/3eb3fd30-32be-402e-bfd5-da57c0dcc5cb)
+
+
 ## Getting Started Locally
 
 To view and run the project on your local machine, follow these instructions:
